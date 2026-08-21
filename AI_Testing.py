@@ -13,7 +13,10 @@ def chat():
 
     response = co.chat(
         model='command-r-plus-08-2024',
-        message='Hi there',
+        message= (reading_memory() + '\n'+ msg, # Before getting the user's msg the AI will go through the memory file
+                  #file first so that the chats are consistent and previous result/msgs sent by the AI can u updated
+                  # and changed with easy, Having a memory will also allow the AI to adapt as the chat goes on
+
     )
     with open('memory.txt', 'a') as memory:
         memory.write(f'User: {msg}')
@@ -24,7 +27,8 @@ def chat():
 
 
 def chat_memory():
-    with open('memory.txt', 'w') as memory:
+    with open('memory.txt', 'w') as memory: # every time the program runs a new file will be created and if a file already
+    #exists it will be wiped clean to make room for new memory
         memory.write("Hi, You are an Email AI assistant for a business"
                      " This text will contain all of your memory on the previous chats between you and the user "
                      "\nGo through this the recent chats before you"
@@ -35,5 +39,15 @@ def chat_memory():
 
 chat_memory()
 
+def reading_memory():
+    with open('memory.txt', 'r') as memory:
+        return  memory.read()
+
+
+
+
 while True:
     chat()
+
+
+
