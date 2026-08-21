@@ -1,6 +1,6 @@
 import os, json, base64, cohere
 import pickle
-
+import os.path
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
@@ -27,9 +27,9 @@ def get_gmail():
     with open('token.pickle', 'wb') as token:
         pickle.dump(creds, token)
 
-        service = build('gmail', 'v1', credentials=creds)
+    return build('gmail', 'v1', credentials=creds)
 
-        return service.users().messages().list(userId='me',maxResults = 2).execute()
+
 
 gmail = get_gmail()
 print("Gmail connected!")
