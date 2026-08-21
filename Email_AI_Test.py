@@ -1,6 +1,7 @@
 import os, json, base64, cohere
 import pickle
 import os.path
+import textwrap
 from unittest import result
 
 from google.auth.transport.requests import Request
@@ -129,17 +130,24 @@ fetched_emails = search_emails("in:anywhere")
 
 top_emails = fetched_emails[:5]
 
-print("\n" + "=" * 50)
-print(f" DISPLAYING TOP {len(top_emails)} EMAILS ")
-print("=" * 50)
+print("\n" + "═" * 80)
+print(f" DISPLAYING TOP {len(top_emails)} EMAILS ".center(60, "═"))
+print("═" * 80)
 
 for i, email in enumerate(top_emails, start=1):
-    print(f"\n[{i}] SUBJECT: {email['subject']}")
-    print(f"    FROM:    {email['sender']}")
-    print(f"    DATE:    {email['date']}")
-    print(f"    CATEGORY: {email['category']}")
-    print(f"    SNIPPET: {email['body']}")
-    print("-" * 50)
+  # Clean up sender string (removes long angle-bracketed emails if needed)
+  sender = email["sender"].replace("<", "(").replace(">", ")")
+
+  # Truncate and wrap body text nicely
+  body_preview = email["body"] + "..." if len(email["body"]) else email["body"]
+  wrapped_body = textwrap.fill(body_preview, width=70, subsequent_indent=" " * 15)
+
+  print(f"\n[{i}] SUBJECT  : {email['subject']}")
+  print(f"    FROM     : {sender}")
+  print(f"    DATE     : {email['date']}")
+  print(f"    CATEGORY : {email['category']}")
+  print(f"    BODY     : {wrapped_body}")
+  print("─" * 80)
 
 print("\nEmail AI assistant")
 print("Type 'quit' to exit\n")
@@ -171,3 +179,4 @@ def adding_email_db():
 
 adding_email_db()
 
++
