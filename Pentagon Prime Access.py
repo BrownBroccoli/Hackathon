@@ -72,6 +72,11 @@ input_box = tk.Entry(input_frame, font=("Arial", 12))
 input_box.grid(row=0, column=1, sticky="ew", ipadx=12, ipady=10)
 input_box.insert(0,"input/ Intact with bot") # This is our input box top(right)
 
+#Search/Run
+def search_run():
+    Email = input_box.get()
+    output.insert("end", f"you: {Email}\n")
+
 
 
 
