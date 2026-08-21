@@ -4,24 +4,29 @@ import cohere
 co = cohere.Client('HCYnZ0Csxn4dTZdQB0WV2q4K0NJ9uzgzJa4EJd4G')
 
 
+def reading_memory():
+    with open('memory.txt', 'r') as memory:
+        return  memory.read()
 
 def chat():
 
 
     msg = input('Enter your message: ')
-
+    chat_mem = reading_memory()
 
     response = co.chat(
         model='command-r-plus-08-2024',
-        message= (reading_memory() + '\n'+ msg, # Before getting the user's msg the AI will go through the memory file
-                  #file first so that the chats are consistent and previous result/msgs sent by the AI can u updated
+        message= (chat_mem + '\n'+ msg # Before getting the user's msg the AI will go through the memory file
+                  # first so that the chats are consistent and previous result/msgs sent by the AI can u updated
                   # and changed with easy, Having a memory will also allow the AI to adapt as the chat goes on
+                  ))
 
-    )
-    with open('memory.txt', 'a') as memory:
-        memory.write(f'User: {msg}')
-        memory.write(f'AI Assistant: {response}')
+
+    with (open('memory.txt', 'a') as memory):
+        memory.write(f'User: {msg}\n')
+        memory.write(f'AI Assistant: {response.text}\n')
         memory.close()
+
     print(response.text)
 
 
@@ -39,9 +44,7 @@ def chat_memory():
 
 chat_memory()
 
-def reading_memory():
-    with open('memory.txt', 'r') as memory:
-        return  memory.read()
+
 
 
 
