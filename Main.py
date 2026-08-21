@@ -63,9 +63,16 @@ fetched_emails = search_emails("in:anywhere")
 
 top_emails = fetched_emails[:5]
 
-print("="*50)
-print(" ")
-print("Display Top 5 Emails")
-print(" ")
-print("="*50)
-print(fetched_emails)
+print("\n" + "=" * 50)
+print(f" DISPLAYING TOP {len(top_emails)} EMAILS ")
+print("=" * 50)
+
+for i, email in enumerate(top_emails, start=1):
+    print(f"\n[{i}] SUBJECT: {email['subject']}")
+    print(f"    FROM:    {email['sender']}")
+    print(f"    DATE:    {email['date']}")
+    print(f"    SNIPPET: {email['body']}")
+    print("-" * 50)
+
+print("\nEmail AI assistant")
+print("Type 'quit' to exit\n")
