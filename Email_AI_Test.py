@@ -70,7 +70,7 @@ def search_emails(query):
         return html.unescape(decoded_text)
 
     def extract_email_body(payload):
-        """Recursively retrieves plain text body from email payload."""
+
         if "body" in payload and payload["body"].get("data"):
             return decode_body_data(payload["body"]["data"])
 
@@ -113,12 +113,14 @@ def search_emails(query):
         full_body = extract_email_body(email["payload"]) or clean_snippet
 
         emails.append({
+            'email_id' : msg['id'],
             "sender": headers.get("from", ""),
             "subject": headers.get("subject", ""),
             "date": headers.get("date", ""),
             "body": full_body,  # Truncated snippet view
             "category": category_name,
             "all_labels": labels,
+
         })
 
     return emails
@@ -144,35 +146,26 @@ print("Type 'quit' to exit\n")
 
 
 def adding_email_db():
-
-
-
     fetched_emails = search_emails('in:anywhere')
 
     for email in fetched_emails[:5]:
 
+        # can be done in another function might need to addd it to that function instead only at the end tho
+        # after everythingwe have is working and going going to improve bugs and whatnot
         sender = email["sender"]
         pos1 = sender.find('<')
         name = sender[:pos1]
-        gmail= sender[pos1:]
-        gmail = gmail.replace('>','')
-        gmail = gmail.replace('<','')
+        g_mail= sender[pos1:]
+        g_mail = g_mail.replace('>','')
+        g_mail = g_mail.replace('<','')
 
+        conn.execute(
+            """INSERT INTO EMAILS (Email_ID, Name, Gmail, SDate, Subject, Body)
+               VALUES (?, ?, ?, ?, ?, ?)""",
+            (email["email_id"], name, g_mail, email["date"], email["subject"], email["body"]),
+        )
 
-
-        print(gmail)
-
-
-
-        # separating email and sender's name
-
-
-
-
-
-       # conn.execute('''INSERT INTO EMAILS (Email_ID, Name, Gmail, SDate, Subject, Body)
-        #                VALUES (?, ?, ?, ?, ?, ?),
-         #                      (i,)  ''')
+        conn.commit()
 
 
 
