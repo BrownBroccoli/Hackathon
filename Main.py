@@ -129,18 +129,19 @@ def access_system():
 
 access_button = tk.Button(
     intro_frame,
-    text = "Access button",
+    text = "Access",
     command = access_system,
-    font=("Arial", 16, "bold"),
-    fg=BLACK,
-    bg= WHITE,
+    font=("Arial", 20, "bold"),
+    fg=WHITE,# BLACK
+    bg= GREEN, # WHITE
     activebackground=LIGHT_GREY,
     activeforeground=BLACK,
-    width=18,
-    height=12,
+    width=13,
+
+    height=3,
     cursor="hand2"
 )
-access_button.pack(pady = (35,20))
+access_button.pack(pady = (35,20)) #35,20
 
 
 root.mainloop()
