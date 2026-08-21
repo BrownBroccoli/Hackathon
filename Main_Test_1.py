@@ -21,7 +21,7 @@ co = cohere.Client('HCYnZ0Csxn4dTZdQB0WV2q4K0NJ9uzgzJa4EJd4G')
 def chat_memory():
     with open('memory.txt', 'w') as memory: # every time the program runs a new file will be created and if a file already
     #exists it will be wiped clean to make room for new memory
-        memory.write("Hi, You are an Email AI assistant for a business"
+        memory.write("Hi, You are an Email AI assistant for a business\n"
                      " This text will contain all of your memory on the previous chats between you and the user "
                      "\nGo through this the recent chats before you")
         memory.close()
@@ -29,14 +29,9 @@ def chat_memory():
 
 chat_memory()
 
-def reading_memory():
-    with open('memory.txt', 'r') as memory:
-        return  memory.read()
 
-def chat(msg):
-    chat_mem = reading_memory()
-    emails = ''
 
+def email_search_ai(msg):
     email_words = ["email", "emails", "mail", "gmail", "inbox",
                    "unread", "important"]
 
@@ -50,12 +45,20 @@ def chat(msg):
 
         print("Searching Gmail:", query)
         emails = search_emails(query)
+        return emails
+    else:
+        return msg
 
 
-    msg = (f"You are an AI Email Assistant."
-           f"User: {msg}\n"
-           f"""Emails:{json.dumps(emails)}\n"""
-           f"Use The emails above to help the user")
+
+def reading_memory():
+    with open('memory.txt', 'r') as memory:
+        return  memory.read()
+
+def chat(msg):
+    chat_mem = reading_memory()
+    emails = ''
+
 
     response = co.chat(
         model='command-r-plus-08-2024',
@@ -66,7 +69,7 @@ def chat(msg):
 
 
     with (open('memory.txt', 'a') as memory):
-        memory.write(f'User: {msg}\n')
+        memory.write(f'\nUser: {msg}\n')
         memory.write(f'AI Assistant: {response.text}\n')
         memory.close()
 
@@ -77,7 +80,7 @@ def chat(msg):
 
 conn = sqlite3.connect('emails.db')
 conn.execute('''CREATE TABLE IF NOT EXISTS EMAILS (Email_Id PRIMARY KEY,Name TEXT,Gmail TEXT,sDate DATE,Subject TEXT,
-                                                   Body TEXT)''' )
+                                                   Body TEXT,Category TEXT)''' )
 print('Databse connected')
 conn.commit()
 
@@ -216,8 +219,10 @@ def adding_email_db():
 
     for email in fetched_emails[:5]:
 
+        cat = chat(f'Give this email a one word category ONLY to fall under like social or promotional: \n{email}')
+
         # can be done in another function might need to addd it to that function instead only at the end tho
-        # after everythingwe have is working and going going to improve bugs and whatnot
+        # after everything have is working and going to improve bugs and whatnot
         sender = email["sender"]
         pos1 = sender.find('<')
         name = sender[:pos1]
@@ -226,16 +231,16 @@ def adding_email_db():
         g_mail = g_mail.replace('<','')
 
         conn.execute(
-            """INSERT INTO EMAILS (Email_ID, Name, Gmail, SDate, Subject, Body)
-               VALUES (?, ?, ?, ?, ?, ?)""",
-            (email["email_id"], name, g_mail, email["date"], email["subject"], email["body"]),
+            """INSERT INTO EMAILS (Email_ID, Name, Gmail, SDate, Subject, Body,Category)
+               VALUES (?, ?, ?, ?, ?, ?,?)""",
+            (email["email_id"], name, g_mail, email["date"], email["subject"], email["body"],cat),
         )
 
         conn.commit()
 
 
 
-
+# adding_email_db()
 
 # ================= WINDOW =================
 root = tk.Tk()
@@ -412,7 +417,9 @@ output = tk.Text(
     font=("Arial", 11),
     bg="white",
     fg="black"
+
 )
+
 
 output.grid(
     row=0,
@@ -448,9 +455,16 @@ output.tag_configure(
 # ================= SEARCH / RUN FUNCTION =================
 def search_run():
     msg = input_box.get()
+    emails = email_search_ai(msg)
+    temp_msg = msg
+    msg = (f"You are an AI Email Assistant."
+           f"User: {msg}\n"
+           f"""Emails:{json.dumps(emails)}\n"""
+           f"Use The emails above to help the user, and do not reference those emails unless the user asks you to"
+           f"\n Display the email info in a clean format")
 
 
-    output.insert("end", f"You: {msg}\n")
+    output.insert("end", f"You: {temp_msg}\n")
     output.insert("end", f"Bot: {chat(msg)}.\n\n")
     output.see("end")
     input_box.delete(0, "end")
@@ -505,20 +519,65 @@ bottom.grid(
 )
 
 # ================= RUN / DATE FUNCTION =================
-def run_date():
+def cmb_filter():
+    if c_option.get() == 'All emails':
+        tree.delete(*tree.get_children())
 
-    output.insert(
-        "end",
-        f"Run Date: {datetime.now().strftime('%Y-%m-%d')}\n\n"
-    )
+        displaying_all_emails()
+    else:
+        tree.delete(*tree.get_children())
+        emails = conn.execute(
+            "SELECT * FROM EMAILS WHERE Category = ?", (c_option.get(),)
+        )
 
-    output.see("end")
+        for email in emails:
+            tree.insert("", "end", values=email)
 
-# ================= RUN / DATE BUTTON =================
+
+
+
+
+
+# ================= CATEGORY COMBO BOX =================
+categories = [
+    'All emails',
+    "Security",
+    "Billing",
+    "Policy",
+    "Payment",
+    "Delivery"
+]
+c_option = tk.StringVar()
+combo = ttk.Combobox(
+    bottom,
+    values=categories,
+    state="readonly",
+    textvariable=c_option
+
+)
+
+combo.set("Select Category")
+
+combo.grid(
+    row=0,
+    column=1,
+    sticky="ew",
+    ipady=5
+)
+
+
+
+bottom.grid_columnconfigure(
+    1,
+    weight=1
+)
+
+
+# ================= Filter =================
 run_button = tk.Button(
     bottom,
-    text="Run / Date",
-    command=run_date,
+    text="Filter",
+    command=cmb_filter,
 
     # Green background
     bg="#16823B",
@@ -549,37 +608,16 @@ run_button.grid(
     ipady=5
 )
 
-# ================= CATEGORY COMBO BOX =================
-categories = [
-    "Data",
-    "Person",
-    "Financial",
-    "Social",
-    "Promotion"
-]
-
-combo = ttk.Combobox(
-    bottom,
-    values=categories,
-    state="readonly"
-)
-
-combo.set("Select Category")
-
-combo.grid(
-    row=0,
-    column=1,
-    sticky="ew",
-    ipady=5
-)
-
-bottom.grid_columnconfigure(
-    1,
-    weight=1
-)
 
 # ================= SELECT EMAIL =================
+def get_categories(values):
+    f_email = conn.execute("SELECT * FROM EMAILS WHERE Email_id = ?", (values[0],)).fetchall()
+    return chat(f'Give this email a one word category ONLY to fall under like social or promotional \n{f_email})')
+
+
+
 def selected_email(event):
+
 
     selected = tree.selection()
 
@@ -601,16 +639,22 @@ def selected_email(event):
             "Selected Email\n",
             "selected"
         )
+        # Get the emails' body
+        body = conn.execute("SELECT BODY FROM EMAILS WHERE Email_id = ?",(values[0],)).fetchall()
+
+        new_body = chat(f"summarise this into a short paragraph: \n{body}")
 
         output.insert(
             "end",
-            f"Email: {values[0]}\n"
-            f"Person: {values[1]}\n"
-            f"Category: {values[2]}\n"
-            f"Subject: {values[3]}\n"
-            f"Date: {values[4]}\n\n",
+            f"SUBJECT: {values[4]}\n"
+            f"FROM: {values[1]}\n"
+            f"DATE: {values[3]}\n"
+            f"CATEGORY: {get_categories(values)}\n"
+            f"BODY: {new_body}\n\n",
             "selected"
         )
+
+        print("─" * 80)
 
         output.see("end")
 

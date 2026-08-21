@@ -1,25 +1,3 @@
-Hi, You are an Email AI assistant for a business This text will contain all of your memory on the previous chats between you and the user 
-Go through this the recent chats before youUser: You are an AI Email Assistant.User: Show me important emails
-Emails:[{"email_id": "1a024d4f690dcb8b", "sender": "Google <no-reply@accounts.google.com>", "subject": "Security alert", "date": "Fri, 21 Aug 2026 14:58:50 GMT", "body": "[image: Google]\r\nYou allowed email AI assistant access to some of your Google Account data\r\n\r\n\r\npentagonprimeotinga@gmail.com\r\n\r\nIf you didn't allow email AI assistant access to some of your Google\r\nAccount data, someone else may be trying to access your Google Account data.\r\n\r\nTake a moment now to check your account activity and secure your account.\r\nCheck activity\r\n<https://accounts.google.com/AccountChooser?Email=pentagonprimeotinga@gmail.com&continue=https://myaccount.google.com/alert/nt/1787324330000?rfn%3D127%26rfnc%3D1%26eid%3D2672421303904952805%26et%3D0>\r\nTo make changes at any time to the access that email AI assistant has to\r\nyour data, go to your Google Account\r\n<https://accounts.google.com/AccountChooser?Email=pentagonprimeotinga@gmail.com&continue=https://myaccount.google.com/connections/overview/AY6rrVHiBf3wY_GjP2V4Y1RqA5Z6xUgQtj_2z3L0zW83y3092Ac6hVeRqJ9P0BLHAZFBGe-6nC9vYUQuSVFKjTChZaA?utm_source%3Dsec_alert%26utm_medium%3Demail_notification%26force_all%3Dtrue>\r\nYou can also see security activity at\r\nhttps://myaccount.google.com/notifications\r\nYou received this email to let you know about important changes to your\r\nGoogle Account and services.\r\n\u00a9 2026 Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA\r\n", "category": "Updates", "all_labels": ["UNREAD", "IMPORTANT", "CATEGORY_UPDATES", "INBOX"]}]
-Use The emails above to help the user
-AI Assistant: Here's a summary of the important email you received:
-
-**Email Subject: Security Alert**
-
-- **Sender:** Google <no-reply@accounts.google.com>
-- **Date:** Friday, August 21, 2026, at 14:58:50 GMT
-- **Summary:** This email is a security notification from Google regarding access to your Google Account data. It informs you that you have granted access to your Google Account data to an email AI assistant. If this action was not authorized by you, it suggests that someone else might be attempting to access your account.
-- **Action Required:** Google recommends that you review your account activity and take steps to secure your account. You can do this by clicking on the provided link: [Check Account Activity](https://accounts.google.com/AccountChooser?Email=pentagonprimeotinga@gmail.com&continue=https://myaccount.google.com/alert/nt/1787324330000?rfn%3D127%26rfnc%3D1%26eid%3D2672421303904952805%26et%3D0). Additionally, you can manage the access permissions for the email AI assistant through your Google Account settings: [Manage Access](https://accounts.google.com/AccountChooser?Email=pentagonprimeotinga@gmail.com&continue=https://myaccount.google.com/connections/overview/AY6rrVHiBf3wY_GjP2V4Y1RqA5Z6xUgQtj_2z3L0zW83y3092Ac6hVeRqJ9P0BLHAZFBGe-6nC9vYUQuSVFKjTChZaA?utm_source%3Dsec_alert%26utm_medium%3Demail_notification%26force_all%3Dtrue).
-- **Additional Information:** You can also monitor security activity related to your account at https://myaccount.google.com/notifications. This email is a service notification to ensure the security of your Google Account.
-
-Please note that I've included the relevant links from the email for your convenience. It's essential to take prompt action to ensure the security of your Google Account.
-User: You are an AI Email Assistant.User: do i have to reply to it
-Emails:""
-Use The emails above to help the user
-AI Assistant: Based on the email content, there is no explicit request for a reply. However, given the nature of the security alert, it is highly recommended that you take immediate action to secure your Google Account. This typically involves reviewing your account activity and making any necessary changes to your account settings.
-
-You can follow the provided links in the email to:
-- **Check Account Activity:** This will allow you to review recent activities on your account and identify any unauthorized actions.
-- **Manage Access:** Here, you can revoke or adjust the permissions granted to the email AI assistant or any other third-party applications.
-
-While replying to the email is not necessary, you should treat this as a priority to ensure the security of your personal information.
+Hi, You are an Email AI assistant for a business
+ This text will contain all of your memory on the previous chats between you and the user 
+Go through this the recent chats before you
