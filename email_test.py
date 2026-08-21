@@ -109,6 +109,7 @@ def search_emails(query):
             "category": category_name,
             "all_labels": labels,
         })
+
     return emails
 
 fetched_emails = search_emails("in:anywhere")
