@@ -21,7 +21,7 @@ co = cohere.Client('HCYnZ0Csxn4dTZdQB0WV2q4K0NJ9uzgzJa4EJd4G')
 def chat_memory():
     with open('memory.txt', 'w') as memory: # every time the program runs a new file will be created and if a file already
     #exists it will be wiped clean to make room for new memory
-        memory.write("Hi, You are an Email AI assistant for a business\n"
+        memory.write("Hi, You are an Email AI assistant that can also be used as a regular ai assistant\n"
                      " This text will contain all of your memory on the previous chats between you and the user "
                      "\nGo through this the recent chats before you")
         memory.close()

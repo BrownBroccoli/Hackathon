@@ -1,6 +1,7 @@
 import os, json, base64, cohere
 import pickle
 import os.path
+import BeautifulSoup
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
@@ -27,6 +28,7 @@ def get_gmail():
     with open('token.pickle', 'wb') as token:
         pickle.dump(creds, token)
 
+    
     return build('gmail', 'v1', credentials=creds)
 
 
@@ -56,7 +58,9 @@ def search_emails(query):
         decoded_text = decoded_bytes.decode("utf-8", errors="replace")
 
         # Unescape HTML entities (e.g., converts &amp; to & or &#39; to ')
-        return html.unescape(decoded_text)
+        soup = BeautifulSoup(decoded_text, 'html.parser')
+        body = soup.get_text(strip=True)
+        return body
 
     def extract_email_body(payload):
         """Recursively retrieves plain text body from email payload."""
