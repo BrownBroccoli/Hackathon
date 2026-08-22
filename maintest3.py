@@ -280,7 +280,7 @@ def run_cohere_chat(prompt, isolated=False):
 
 # ================= ROOT APPLICATION =================
 root = tk.Tk()
-root.title("Pentagon Prime")
+root.title("M@il It")
 root.geometry("1200x700")
 root.configure(bg=NAVY)
 
@@ -331,7 +331,7 @@ canvas.bind_all("<MouseWheel>", mouse_scroll)
 
 intro_label = tk.Label(
     intro_frame,
-    text="Pentagon Prime",
+    text="M@il It",
     font=("Arial", 28, "bold"),
     bg=LIGHT_NAVY,
     fg=WHITE,
@@ -355,8 +355,8 @@ description_label = tk.Label(
         "such as administrators, manage their daily responsibilities and "
         "solve problems more efficiently. The software is designed to provide "
         "useful solutions and help users complete their duties more quickly, "
-        "saving valuable time in the workplace. Please note that Pentagon "
-        "Prime is still a prototype and some features may still be under "
+        "saving valuable time in the workplace. Please note that M@il "
+        "It is still a prototype and some features may still be under "
         "development. To proceed to the system, please press the "
         '"ACCESS" button below.'
     ),
