@@ -280,7 +280,7 @@ def run_cohere_chat(prompt, isolated=False):
 
 # ================= ROOT APPLICATION =================
 root = tk.Tk()
-root.title("Pentagon Prime")
+root.title("M@il It")
 root.geometry("1200x700")
 root.configure(bg=NAVY)
 
@@ -331,7 +331,11 @@ canvas.bind_all("<MouseWheel>", mouse_scroll)
 
 intro_label = tk.Label(
     intro_frame,
-    text="Pentagon Prime",
+<<<<<<< HEAD
+    text="M@il IT",
+=======
+    text="M@il It",
+>>>>>>> fb9a029091a973b927316f3842dc1006abe47680
     font=("Arial", 28, "bold"),
     bg=LIGHT_NAVY,
     fg=WHITE,
@@ -344,7 +348,7 @@ description_frame.pack(padx=30, pady=10, fill="x")
 description_label = tk.Label(
     description_frame,
     text=(
-        "Welcome to our Pentagon Prime project. In this project, we are "
+        "Welcome to M@il IT. In this project, we are "
         "building software that can help businesses and people solve their "
         "problems more quickly and efficiently. Our software focuses on "
         "working with emails by filtering emails and identifying important "
@@ -355,8 +359,13 @@ description_label = tk.Label(
         "such as administrators, manage their daily responsibilities and "
         "solve problems more efficiently. The software is designed to provide "
         "useful solutions and help users complete their duties more quickly, "
-        "saving valuable time in the workplace. Please note that Pentagon "
-        "Prime is still a prototype and some features may still be under "
+<<<<<<< HEAD
+        "saving valuable time in the workplace. Please note that M@il IT "
+        "M@il IT is still a prototype and some features may still be under "
+=======
+        "saving valuable time in the workplace. Please note that M@il "
+        "It is still a prototype and some features may still be under "
+>>>>>>> fb9a029091a973b927316f3842dc1006abe47680
         "development. To proceed to the system, please press the "
         '"ACCESS" button below.'
     ),
